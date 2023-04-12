@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <h2 class="text-center mb-4">Sign Up</h2>
+          <form>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+            <p class="mt-3 text-center">Already have an account? <a href="index.html">Sign in</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // Initialize Firebase
+      var firebaseConfig = {
+        apiKey: "AIzaSyCZNBscKNxT5r6K3Zs8Hh7Z3_xJ0r-rPhc",
+  authDomain: "chat-app-8ab3b.firebaseapp.com",
+  databaseURL: "https://chat-app-8ab3b-default-rtdb.firebaseio.com",
+  projectId: "chat-app-8ab3b",
+  storageBucket: "chat-app-8ab3b.appspot.com",
+  messagingSenderId: "164356852845",
+  appId: "1:164356852845:web:b29bef7063c568d3134364"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      // Get elements
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const signUpForm = document.querySelector("form");
+
+      // Add sign up event
+      signUpForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value;
+        const password = passwordInput.value;
+
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            console.log(user);
+            alert("You have successfully signed up!");
+            window.location.href = "index.html";
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error(errorMessage);
+          });
+      });
+    </script>
+  </body>
+</html>
